@@ -1,13 +1,13 @@
 "use strict";
 
 const mongoose = require("mongoose");
-
+mongoose.Promise = global.Promise; 
 
 
 const blogSchema = mongoose.Schema({
     title: { type: String, required: true },
-    content: { type: String, required: true },
-    created: { type: String, required: true },
+    content: { type: String },
+    created: { type: Date, default: Date.now },
     author: {
       firstName: String,
       lastName: String,
@@ -16,7 +16,7 @@ const blogSchema = mongoose.Schema({
   
 
   blogSchema.virtual("authorString").get(function() {
-    return `${this.author.building} ${this.author.firstName.lastName}`.trim();
+    return `${this.author.firstName} ${this.author.lastName}`.trim();
   });
   
 
@@ -31,7 +31,7 @@ const blogSchema = mongoose.Schema({
   };
   
 
-  const BlogPost = mongoose.model("Blog", blogSchema);
+  const BlogPost = mongoose.model("BlogPost", blogSchema);
   
   module.exports = { BlogPost };
   
